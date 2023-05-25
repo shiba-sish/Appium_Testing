@@ -1,0 +1,772 @@
+sample or demo apk files can be downloaded from these two websites. 
+1.  https://www.apk4fun.com/
+2.  https://apkpure.com/
+
+
+
+
+part 5 :- installing an apk file on virtual device(Emulator)
+
+1. download any apk file from the internet and store it in any one of the drives in your system.
+
+2. First open andriod studio and launch the emulator (virtual device)
+
+3. After starting your virtual device then only start the appium server (appium windows gui application) , then only it will identify your virtual device on which you want to install the apk file. 
+
+4. when you start the appium server. 
+ones the server is started it will strart recognising the virtual device. 
+we can cross check this from command prompt. 
+open a command prompt , 
+navigate to sdk\tools\bin folder, from command prompt , 
+In that folder we will find the adb.exe file using that file we can know which device is connected or running . 
+
+from command prompt type the following command.  "adb.exe devices"  and press enter . it will start showing your virtual device name. 
+
+
+adb.exe devices
+list of devices attached
+emilator-5554 device
+
+
+step 5:- now install the apk file on this virtual device. 
+
+Go to your appium gui software and press on start inspector session button. 
+It will open a new inspector session window. 
+
+Here in this inspector window we need to give some desired capabilities such as 
+platformName - either it is Android / IOS 
+deviceName - Android Emulator / IOS Emulator .
+app - where our apk file is located in our computer and name of the apk file
+
+
+platformName - Android
+deviceName - Android Emulator
+app - C:\Users\Administrator\Desktop\skillmine\ApiDemos-debug.apk
+
+
+After giving all the desired capabilites click on start session button.
+This will immediatly start installing the apk file in the virtual device. 
+
+
+you can also see the apk file( app) opening in your virtual device also.
+
+Now we will be able to see the app running in both virtual device also it will capture the screen of the virtual device in the inspector window. (both will be showing the same screen.)
+
+
+WE can click on any one of the elements in the inspector window and it will start showing all the attributes of the element. like, id, text , class, xpath, package etc, which we can use during automation.
+
+
+
+
+Step 6 :- identifying elements in your app.
+1. Identify elements using Appium Inspector
+
+
+1. Using Appium inspector :
+   - first start the android studios and launch the virtual device and launch the app which is already installed .
+   - To start finding the elements ,we need to start the appium desktop server gui first 
+   - after the appium server is started , click on start inspector session.
+   - This will launch another window (appium inspector window) give the desired capabilities and click on the start session button. 
+   -  this will show one more screen , and will launch our app in the inspector window.
+
+   - now from the window click on any element you want to inspect , and after you have clicked on the element on the right side window it will start showing all the attributes of the elements (id, name, class, etc) 
+  - in the middle window it will show the source code of the element. 
+
+  - now from the emulator click on the same element you clicked on , from the appium inspector window. if it has another page to display ., that page is not going to appear in your appium inspector window , if you want that second window also to appear in the appium selector, you need to first select that element and then click on "refesh source and screenshot" button from the appium inspector .. then it will start showing the next page also.
+
+example. :- first from the emulator, click on "content" tab, and then it will open another tab.  showing
+Assets
+Clipboard
+Packages
+Provider
+Resources
+Storage
+
+
+Step 7 :- configuring eclipse to start writing your appium code.  
+
+Pre requsits :-
+ 1. android studio
+ 2. Appium desktop server
+ --- 
+ appium client library (java-client-7.0.0.jar)
+go to the maven repository website and type ( java-client) 
+https://mvnrepository.com/artifact/io.appium/java-client/8.4.0
+
+if you are doing a maven project copy the dependencies , if you are doing a normal java project downloa the jar file and attach it to your class path or build path of your java project. 
+
+
+ selenium stand alone server(jar file)
+ commons_lang3 (commons-lang3- 3.8.1.jar file)
+
+after download all the 3 jar files , keep in a folder in your project. 
+
+
+Open eclipse and create a simple java project (appium_mobile_testing)
+
+right click on project name - go to properties -  go to java build path -  click on libraries - click on classpath -  click add external jars - go the location where all the jar files are present , select all the jar files and click on apply, apply and close
+
+
+
+
+
+
+Step 8 :- how to write a script in eclipse to install apk file on the virtual device. 
+
+open eclipse ,
+create a java project. 
+add the jar files 
+
+start your android studios , start the virtual device. 
+start the appium server ( using appium windows gui) 
+
+write the code in eclipse by creating a new class
+
+package installing_app_emulator;
+
+import org.openqa.selenium.remote.DesiredCapabilities;
+import io.appium.java_client.remote.MobileCapabilityType;
+import io.appium.java_client.android.AndroidDriver;
+import java.net.MalformedURLException;
+import java.net.URL;
+
+public class InstallAppOnEmulator 
+{
+  public static  void main(String[] args) throws MalformedURLException, InterruptedException 
+  {
+	DesiredCapabilities dc = new DesiredCapabilities();
+	
+	dc.setCapability(MobileCapabilityType.AUTOMATION_NAME, "Appium");
+	
+	dc.setCapability(MobileCapabilityType.PLATFORM_NAME, "Android");
+	
+	dc.setCapability(MobileCapabilityType.PLATFORM_VERSION, 13);
+	
+	dc.setCapability(MobileCapabilityType.DEVICE_NAME, "Android Emulator");
+	
+	dc.setCapability(MobileCapabilityType.APP, "C:\\Users\\Administrator\\Desktop\\skillmine\\Dragon Mart_2.9.9_Apkpure.apk");
+	
+	URL url = new URL("http://0.0.0.0:4723/wd/hub");
+	
+	AndroidDriver driver = new AndroidDriver(url, dc);
+	
+	Thread.sleep(3000);
+	driver.quit();
+  }
+}
+
+   
+
+
+
+
+# installing APK_INFO apk file in our virtual device. 
+
+
+package installing_app_emulator;
+
+import org.openqa.selenium.remote.DesiredCapabilities;
+import io.appium.java_client.remote.MobileCapabilityType;
+import io.appium.java_client.android.AndroidDriver;
+import java.net.MalformedURLException;
+import java.net.URL;
+
+public class InstallApp_APK_INFO 
+{
+  public static  void main(String[] args) throws MalformedURLException, InterruptedException 
+  {
+	DesiredCapabilities dc = new DesiredCapabilities();
+	
+	dc.setCapability(MobileCapabilityType.AUTOMATION_NAME, "Appium");
+	
+	dc.setCapability(MobileCapabilityType.PLATFORM_NAME, "Android");
+	
+	dc.setCapability(MobileCapabilityType.PLATFORM_VERSION, 13);
+	
+	dc.setCapability(MobileCapabilityType.DEVICE_NAME, "Android Emulator");
+	
+	dc.setCapability(MobileCapabilityType.APP, "C:\\Users\\Administrator\\Desktop\\skillmine\\Apk Info_2.3.2_Apkpure.apk");
+	
+	URL url = new URL("http://0.0.0.0:4723/wd/hub");
+	
+	AndroidDriver driver = new AndroidDriver(url, dc);
+	
+	Thread.sleep(3000);
+	driver.quit();
+  }
+}
+
+
+
+
+
+
+# first script to open a native app (calculator in our virtual device).
+
+
+package installing_app_emulator;
+
+import org.openqa.selenium.remote.DesiredCapabilities;
+import io.appium.java_client.remote.MobileCapabilityType;
+import io.appium.java_client.android.AndroidDriver;
+import java.net.MalformedURLException;
+import java.net.URL;
+
+public class InstallApp_APK_INFO 
+{
+  public static  void main(String[] args) throws MalformedURLException, InterruptedException 
+  {
+	DesiredCapabilities dc = new DesiredCapabilities();
+	
+	dc.setCapability(MobileCapabilityType.AUTOMATION_NAME, "Appium");
+	
+	dc.setCapability(MobileCapabilityType.PLATFORM_NAME, "Android");
+	
+	dc.setCapability(MobileCapabilityType.PLATFORM_VERSION, 13);
+	
+	dc.setCapability(MobileCapabilityType.DEVICE_NAME, "Android Emulator");
+	
+	dc.setCapability(MobileCapabilityType.APP, "C:\\Users\\Administrator\\Desktop\\skillmine\\Apk Info_2.3.2_Apkpure.apk");
+	
+	URL url = new URL("http://0.0.0.0:4723/wd/hub");
+	
+	AndroidDriver driver = new AndroidDriver(url, dc);
+	
+	Thread.sleep(3000);
+	driver.quit();
+  }
+}
+
+
+This scritp will open the calculator app in our virtual device. 
+
+7+5 = 12
+
+
+package installing_app_emulator;
+
+import java.net.MalformedURLException;
+import java.net.URL;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.remote.DesiredCapabilities;
+
+import io.appium.java_client.android.AndroidDriver;
+import io.appium.java_client.remote.MobileCapabilityType;
+
+public class O4_automatingAddition_calculator {
+
+	public static void main(String[] args) throws InterruptedException, MalformedURLException {
+		DesiredCapabilities dc = new DesiredCapabilities();
+		dc.setCapability(MobileCapabilityType.AUTOMATION_NAME, "Appium");
+		dc.setCapability(MobileCapabilityType.PLATFORM_NAME, "Android");
+		dc.setCapability(MobileCapabilityType.PLATFORM_VERSION, 13);
+		dc.setCapability(MobileCapabilityType.DEVICE_NAME, "Android Emulator");
+		dc.setCapability("appPackage", "com.google.android.calculator");
+		dc.setCapability("appActivity", "com.android.calculator2.Calculator");
+		// app package name -  com.google.android.calculator
+		// app activity - com.android.calculator2.Calculator
+		// now create the url for the application.
+		URL url = new URL("http://127.0.0.1:4723/wd/hub");
+		AndroidDriver driver = new AndroidDriver(url, dc);
+		
+	  // giving 5 seconds time to completly load the calculator app.
+		Thread.sleep(5000);
+		
+		// click on the seven button from the calculator using its id. 
+		WebElement sevenbutton = driver.findElement(By.id("com.google.android.calculator:id/digit_7"));
+		Thread.sleep(500);
+		sevenbutton.click();
+		Thread.sleep(500);
+		
+		// click on the + button 
+		WebElement addbutton = driver.findElement(By.id("com.google.android.calculator:id/op_add"));
+		Thread.sleep(500);
+		addbutton.click();
+		Thread.sleep(500);
+		
+		// click on any other number lets say 5. 
+		WebElement fivebutton = driver.findElement(By.id("com.google.android.calculator:id/digit_5"));
+		Thread.sleep(5);
+		fivebutton.click();
+		Thread.sleep(500);
+		
+		// click on " = " button.
+		WebElement equalbutton = driver.findElement(By.id("com.google.android.calculator:id/eq"));
+		Thread.sleep(500);
+		equalbutton.click();
+		
+		// capture the result text 12 
+		String expected_result = "12";
+		
+		String actual_result = driver.findElement(By.id("com.google.android.calculator:id/result_final")).getText();
+		
+		
+		if(expected_result.equals(actual_result)) {
+			System.out.println("TEst case passed.");
+		}
+		else {
+			System.out.println("TEst case failed.");
+		}
+	}
+}
+
+==============================================================================
+==============================================================================
+programes of appium:
+1.
+package installing_app_emulator;
+
+import org.openqa.selenium.remote.DesiredCapabilities;
+import io.appium.java_client.remote.MobileCapabilityType;
+import io.appium.java_client.android.AndroidDriver;
+import java.net.MalformedURLException;
+import java.net.URL;
+
+public class InstallApp_APK_INFO 
+{
+  public static  void main(String[] args) throws MalformedURLException, InterruptedException 
+  {
+	DesiredCapabilities dc = new DesiredCapabilities();
+	
+	dc.setCapability(MobileCapabilityType.AUTOMATION_NAME, "Appium");
+	
+	dc.setCapability(MobileCapabilityType.PLATFORM_NAME, "Android");
+	
+	dc.setCapability(MobileCapabilityType.PLATFORM_VERSION, 13);
+	
+	dc.setCapability(MobileCapabilityType.DEVICE_NAME, "Android Emulator");
+	
+	dc.setCapability(MobileCapabilityType.APP, "C:\\Users\\Administrator\\Desktop\\skillmine\\Apk Info_2.3.2_Apkpure.apk");
+	
+	URL url = new URL("http://0.0.0.0:4723/wd/hub");
+	
+	AndroidDriver driver = new AndroidDriver(url, dc);
+	
+	Thread.sleep(3000);
+	driver.quit();
+  }
+}
+
+
+2.
+package installing_app_emulator;
+
+import org.openqa.selenium.remote.DesiredCapabilities;
+import io.appium.java_client.remote.MobileCapabilityType;
+import io.appium.java_client.android.AndroidDriver;
+import java.net.MalformedURLException;
+import java.net.URL;
+
+public class InstallAppOnEmulator 
+{
+  public static  void main(String[] args) throws MalformedURLException, InterruptedException 
+  {
+	DesiredCapabilities dc = new DesiredCapabilities();
+	
+	dc.setCapability(MobileCapabilityType.AUTOMATION_NAME, "Appium");
+	
+	dc.setCapability(MobileCapabilityType.PLATFORM_NAME, "Android");
+	
+	dc.setCapability(MobileCapabilityType.PLATFORM_VERSION, 13);
+	
+	dc.setCapability(MobileCapabilityType.DEVICE_NAME, "Android Emulator");
+	
+	dc.setCapability(MobileCapabilityType.APP, "C:\\Users\\Administrator\\Desktop\\skillmine\\Dragon Mart_2.9.9_Apkpure.apk");
+	
+	URL url = new URL("http://0.0.0.0:4723/wd/hub");
+	
+	AndroidDriver driver = new AndroidDriver(url, dc);
+	
+	Thread.sleep(3000);
+	driver.quit();
+  }
+}
+
+
+3.
+package installing_app_emulator;
+
+import java.net.MalformedURLException;
+import java.net.URL;
+
+import org.openqa.selenium.remote.DesiredCapabilities;
+
+import io.appium.java_client.android.AndroidDriver;
+import io.appium.java_client.remote.MobileCapabilityType;
+
+public class O3_automating_calculator {
+
+	public static void main(String[] args) throws InterruptedException, MalformedURLException {
+		DesiredCapabilities dc = new DesiredCapabilities();
+		
+		dc.setCapability(MobileCapabilityType.AUTOMATION_NAME, "Appium");
+		
+		dc.setCapability(MobileCapabilityType.PLATFORM_NAME, "Android");
+		
+		dc.setCapability(MobileCapabilityType.PLATFORM_VERSION, 13);
+		
+		dc.setCapability(MobileCapabilityType.DEVICE_NAME, "Android Emulator");
+		
+//		dc.setCapability(MobileCapabilityType.APP, "C:\\Users\\Administrator\\Desktop\\skillmine\\Apk Info_2.3.2_Apkpure.apk");
+//		URL url = new URL("http://0.0.0.0:4723/wd/hub");
+//		AndroidDriver driver = new AndroidDriver(url, dc);
+		
+		dc.setCapability("appPackage", "com.google.android.calculator");
+		dc.setCapability("appActivity", "com.android.calculator2.Calculator");
+		
+		// app package name -  com.google.android.calculator
+		// app activity - com.android.calculator2.Calculator
+      
+		// now create the url for the application.
+		URL url = new URL("http://127.0.0.1:4723/wd/hub");
+		AndroidDriver driver = new AndroidDriver(url, dc);
+		
+	  // giving 5 seconds time to completly load the calculator app.
+		Thread.sleep(5000);
+		
+		
+	}
+
+}
+
+
+
+4.
+package installing_app_emulator;
+
+import java.net.MalformedURLException;
+import java.net.URL;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.remote.DesiredCapabilities;
+
+import io.appium.java_client.android.AndroidDriver;
+import io.appium.java_client.remote.MobileCapabilityType;
+
+public class O4_automatingAddition_calculator {
+
+	public static void main(String[] args) throws InterruptedException, MalformedURLException {
+		DesiredCapabilities dc = new DesiredCapabilities();
+		dc.setCapability(MobileCapabilityType.AUTOMATION_NAME, "Appium");
+		dc.setCapability(MobileCapabilityType.PLATFORM_NAME, "Android");
+		dc.setCapability(MobileCapabilityType.PLATFORM_VERSION, 13);
+		dc.setCapability(MobileCapabilityType.DEVICE_NAME, "Android Emulator");
+		dc.setCapability("appPackage", "com.google.android.calculator");
+		dc.setCapability("appActivity", "com.android.calculator2.Calculator");
+		// app package name -  com.google.android.calculator
+		// app activity - com.android.calculator2.Calculator
+		// now create the url for the application.
+		URL url = new URL("http://127.0.0.1:4723/wd/hub");
+		AndroidDriver driver = new AndroidDriver(url, dc);
+		
+	  // giving 5 seconds time to completly load the calculator app.
+		Thread.sleep(5000);
+		
+		// click on the seven button from the calculator using its id. 
+		WebElement sevenbutton = driver.findElement(By.id("com.google.android.calculator:id/digit_7"));
+		Thread.sleep(500);
+		sevenbutton.click();
+		Thread.sleep(500);
+		
+		// click on the + button 
+		WebElement addbutton = driver.findElement(By.id("com.google.android.calculator:id/op_add"));
+		Thread.sleep(500);
+		addbutton.click();
+		Thread.sleep(500);
+		
+		// click on any other number lets say 5. 
+		WebElement fivebutton = driver.findElement(By.id("com.google.android.calculator:id/digit_5"));
+		Thread.sleep(5);
+		fivebutton.click();
+		Thread.sleep(500);
+		
+		// click on " = " button.
+		WebElement equalbutton = driver.findElement(By.id("com.google.android.calculator:id/eq"));
+		Thread.sleep(500);
+		equalbutton.click();
+		
+		// capture the result text 12 
+		String expected_result = "12";
+		
+		String actual_result = driver.findElement(By.id("com.google.android.calculator:id/result_final")).getText();
+		
+		
+		if(expected_result.equals(actual_result)) {
+			System.out.println("TEst case passed.");
+		}
+		else {
+			System.out.println("TEst case failed.");
+		}
+	}
+}
+
+
+5.
+package installing_app_emulator;
+
+import org.openqa.selenium.remote.DesiredCapabilities;
+import io.appium.java_client.remote.MobileCapabilityType;
+import io.appium.java_client.android.AndroidDriver;
+import java.net.MalformedURLException;
+import java.net.URL;
+
+public class O5Installing_mysettling_build1 
+{
+  public static  void main(String[] args) throws MalformedURLException, InterruptedException 
+  {
+	DesiredCapabilities dc = new DesiredCapabilities();
+	
+	dc.setCapability(MobileCapabilityType.AUTOMATION_NAME, "Appium");
+	
+	dc.setCapability(MobileCapabilityType.PLATFORM_NAME, "Android");
+	
+	dc.setCapability(MobileCapabilityType.PLATFORM_VERSION, 13);
+	
+	dc.setCapability(MobileCapabilityType.DEVICE_NAME, "Android Emulator");
+	
+	dc.setCapability(MobileCapabilityType.APP, "C:\\Users\\Administrator\\Desktop\\skillmine\\app-release.apk");
+	
+	URL url = new URL("http://0.0.0.0:4723/wd/hub");
+	
+	AndroidDriver driver = new AndroidDriver(url, dc);
+	
+	Thread.sleep(3000);
+	driver.quit();
+  }
+}
+
+
+6.
+package installing_app_emulator;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.remote.DesiredCapabilities;
+import io.appium.java_client.remote.MobileCapabilityType;
+import io.appium.java_client.android.AndroidDriver;
+import java.net.MalformedURLException;
+import java.net.URL;
+
+public class O6_mysettling_login_automation 
+{
+  public static  void main(String[] args) throws MalformedURLException, InterruptedException 
+  {
+	DesiredCapabilities dc = new DesiredCapabilities();
+	dc.setCapability(MobileCapabilityType.AUTOMATION_NAME, "Appium");
+	dc.setCapability(MobileCapabilityType.PLATFORM_NAME, "Android");
+	dc.setCapability(MobileCapabilityType.PLATFORM_VERSION, 13);
+	dc.setCapability(MobileCapabilityType.DEVICE_NAME, "Android Emulator");
+	
+//	dc.setCapability(MobileCapabilityType.APP, "C:\\Users\\Administrator\\Desktop\\skillmine\\app-release.apk");
+//	URL url = new URL("http://0.0.0.0:4723/wd/hub");
+
+	dc.setCapability("appPackage", "com.mysettling");
+	dc.setCapability("appActivity", "com.mysettling.MainActivity");
+	
+	URL url = new URL("http://127.0.0.1:4723/wd/hub");
+	Thread.sleep(5000);
+	AndroidDriver driver = new AndroidDriver(url, dc);
+	
+     Thread.sleep(5000);
+     
+//     driver.findElement(By.className("android.widget.EditText")).click();
+//     Thread.sleep(3000);
+//     WebElement numbertextfield = driver.findElement(By.className("android.widget.EditText"));
+//     Thread.sleep(3000);
+//     numbertextfield.sendKeys("9538596766");
+//     Thread.sleep(3000);
+//     driver.navigate().back();
+//     Thread.sleep(3000);
+     ////*[@id="screenshotContainer"]/div/div/div/div/div/div[31]/div
+     WebElement loginbutton = driver.findElement(By.className("android.widget.TextView"));
+     Thread.sleep(2000);
+     loginbutton.click();
+  }
+}
+
+
+7.
+package installing_app_emulator;
+
+import java.net.MalformedURLException;
+import java.net.URL;
+import org.openqa.selenium.By;
+import org.openqa.selenium.remote.DesiredCapabilities;
+import io.appium.java_client.android.AndroidDriver;
+import io.appium.java_client.remote.MobileCapabilityType;
+
+public class O7_bouncing_ball_animation 
+{
+  public static  void main(String[] args) throws MalformedURLException, InterruptedException 
+  {
+	DesiredCapabilities dc = new DesiredCapabilities();
+	dc.setCapability(MobileCapabilityType.AUTOMATION_NAME, "Appium");
+	dc.setCapability(MobileCapabilityType.PLATFORM_NAME, "Android");
+	dc.setCapability(MobileCapabilityType.PLATFORM_VERSION, 13);
+	dc.setCapability(MobileCapabilityType.DEVICE_NAME, "Android Emulator");
+
+	dc.setCapability("appPackage", "io.appium.android.apis");
+	dc.setCapability("appActivity", "io.appium.android.apis.ApiDemos");
+	
+	URL url = new URL("http://127.0.0.1:4723/wd/hub");
+	Thread.sleep(5000);
+	AndroidDriver driver = new AndroidDriver(url, dc);
+	
+	Thread.sleep(1000);
+	
+	// get the animation button 
+	driver.findElements(By.id("android:id/text1")).get(2).click();
+	Thread.sleep(1000);
+	
+	// find the bouncing ball button
+	driver.findElements(By.id("android:id/text1")).get(0).click();
+	Thread.sleep(1000);
+	
+    // come back to the bouncing ball button window.
+	driver.navigate().back();
+	Thread.sleep(2000);
+	
+	// come back to the main animation button window.
+	driver.navigate().back();
+	Thread.sleep(2000);
+	
+	// will come back to the mobile screen.
+	driver.navigate().back();
+	Thread.sleep(2000);
+	
+	driver.quit();
+  }
+}
+
+
+8.
+package installing_app_emulator;
+
+import java.net.MalformedURLException;
+import java.net.URL;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.remote.DesiredCapabilities;
+import io.appium.java_client.android.AndroidDriver;
+import io.appium.java_client.remote.MobileCapabilityType;
+
+public class O8_cloning_button_animation 
+{
+  public static  void main(String[] args) throws MalformedURLException, InterruptedException 
+  {
+	DesiredCapabilities dc = new DesiredCapabilities();
+	dc.setCapability(MobileCapabilityType.AUTOMATION_NAME, "Appium");
+	dc.setCapability(MobileCapabilityType.PLATFORM_NAME, "Android");
+	dc.setCapability(MobileCapabilityType.PLATFORM_VERSION, 13);
+	dc.setCapability(MobileCapabilityType.DEVICE_NAME, "Android Emulator");
+
+	dc.setCapability("appPackage", "io.appium.android.apis");
+	dc.setCapability("appActivity", "io.appium.android.apis.ApiDemos");
+	
+	URL url = new URL("http://127.0.0.1:4723/wd/hub");
+	Thread.sleep(5000);
+	AndroidDriver driver = new AndroidDriver(url, dc);
+	
+	Thread.sleep(1000);
+	
+	// get the animation button 
+	driver.findElements(By.id("android:id/text1")).get(2).click();
+	Thread.sleep(1000);
+	
+	// find the cloning button
+	driver.findElements(By.id("android:id/text1")).get(1).click();
+	Thread.sleep(1000);
+	
+	// find the run button and click on it 3 times
+	WebElement runbutton = driver.findElement(By.id("io.appium.android.apis:id/startButton"));
+	runbutton.click();
+	Thread.sleep(1000);
+	runbutton.click();
+	Thread.sleep(1000);
+	runbutton.click();
+	Thread.sleep(1000);
+	
+    // come back to the cloning window.
+	driver.navigate().back();
+	Thread.sleep(2000);
+	
+	// come back to the main animation button window.
+	driver.navigate().back();
+	Thread.sleep(2000);
+	
+	// will come back to the mobile screen.
+	driver.navigate().back();
+	Thread.sleep(2000);
+	
+	driver.quit();
+  }
+}
+
+
+9.
+package installing_app_emulator;
+
+import java.net.MalformedURLException;
+import java.net.URL;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.remote.DesiredCapabilities;
+import io.appium.java_client.android.AndroidDriver;
+import io.appium.java_client.remote.MobileCapabilityType;
+
+public class O9_gettingAssetText 
+{
+  public static  void main(String[] args) throws MalformedURLException, InterruptedException 
+  {
+	DesiredCapabilities dc = new DesiredCapabilities();
+	dc.setCapability(MobileCapabilityType.AUTOMATION_NAME, "Appium");
+	dc.setCapability(MobileCapabilityType.PLATFORM_NAME, "Android");
+	dc.setCapability(MobileCapabilityType.PLATFORM_VERSION, 13);
+	dc.setCapability(MobileCapabilityType.DEVICE_NAME, "Android Emulator");
+
+	dc.setCapability("appPackage", "io.appium.android.apis");
+	dc.setCapability("appActivity", "io.appium.android.apis.ApiDemos");
+	
+	URL url = new URL("http://127.0.0.1:4723/wd/hub");
+	Thread.sleep(5000);
+	AndroidDriver driver = new AndroidDriver(url, dc);
+	
+	Thread.sleep(1000);
+	
+	// get the content button 
+	driver.findElements(By.id("android:id/text1")).get(4).click();
+	Thread.sleep(1000);
+	
+	// get the Assets button and click on it. 
+	driver.findElements(By.id("android:id/text1")).get(0).click();
+	Thread.sleep(1000);
+	
+	// get the Read Assets button and click on it. 
+	driver.findElements(By.id("android:id/text1")).get(0).click();
+	Thread.sleep(1000);
+	
+	String expected_text = "This text is stored in a raw Asset.\r\n"
+			+ "\r\n"
+			+ "It was read and placed into the TextView here.";
+    
+	String actual_text = driver.findElement(By.id("io.appium.android.apis:id/text")).getText();
+	Thread.sleep(1000);
+	System.out.println(actual_text);
+	
+	if (expected_text.equals(actual_text)) {
+		System.out.println("Test case passed");
+	}
+	else {
+		System.out.println("Test case failed");
+	}
+  }
+}
+
+
+
+
+ 
